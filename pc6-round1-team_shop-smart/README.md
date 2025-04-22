@@ -7,10 +7,10 @@ Exploit common web application vulnerabilities to retrieve four tokens.
 ## 🧠 Challenge Summary
 
 You will:
-- Brute-force a login page to gain admin access
-- Review customer orders to find hidden information
+- Manipulate registration to gain admin access
+- Brute force customer logins to see past orders and find hidden information
 - Explore server-side files for exposed content
-- Exploit shopping cart functionality
+- Exploit product listing to buy hidden items
 
 ---
 
