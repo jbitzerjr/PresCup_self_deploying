@@ -1,0 +1,16 @@
+FROM php:8.1-apache
+
+# Install mysqli so the PHP app can talk to the database
+RUN docker-php-ext-install mysqli
+
+# The original challenge was on a physical server with a poor setup.
+# This line mimics that poor setup by enabling output buffering,
+# which allows bad PHP practices (like sending headers after HTML).
+RUN echo "output_buffering = On" > /usr/local/etc/php/conf.d/output-buffering.ini
+
+# Copy the actual site into the container
+COPY ./src /var/www/html/
+
+# Copy token3.txt into place
+COPY token3.txt /var/www/token3.txt
+ 
