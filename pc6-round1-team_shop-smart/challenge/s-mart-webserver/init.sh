@@ -3,11 +3,11 @@
 ADJECTIVES="fuzzy tartan haunted evil cryptic dumb cursed filthy moldy broken"
 NOUNS="squirrel chainsaw gremlin possum priest curse toaster goblin"
 
-FLAG_LOG="/root/current_tokens.txt"
+FLAG_LOG="./current_tokens.txt"
 > "$FLAG_LOG"
 
 # Detect the challenge directory
-CHALLENGE_DIR=$(find /root -mindepth 1 -maxdepth 1 -type d ! -name '.*' ! -name 'lost+found')
+CHALLENGE_DIR=$(find ./ -mindepth 1 -maxdepth 1 -type d ! -name '.*' ! -name 'lost+found')
 cd "$CHALLENGE_DIR" || exit 1
 
 # Find all .php and .txt files with ########
