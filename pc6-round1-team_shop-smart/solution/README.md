@@ -4,7 +4,7 @@
 
 ## Overview
 
-The purpose of this challenge is to attack the website at `http://10.5.5.100` using the [OWASP Top Ten vulnerabilities](https://owasp.org/www-project-top-ten/) to gain four (4) tokens.  Start by logging into the `shopper-terminal` VM with `user`|`tartans` and browse to `http://10.5.5.100`.
+The purpose of this challenge is to attack the website at `http://localhost` using the [OWASP Top Ten vulnerabilities](https://owasp.org/www-project-top-ten/) to gain four (4) tokens.  Start by logging into the `shopper-terminal` VM with `user`|`tartans` and browse to `http://localhost`.
 
 ## Question 1
 
@@ -14,7 +14,7 @@ The purpose of this challenge is to attack the website at `http://10.5.5.100` us
 
 	![](img/img1.png)
 
-2. Select **Proxy**, **Open browser** in the Proxy tab. Browse to `10.5.5.100`in the Burp browser.
+2. Select **Proxy**, **Open browser** in the Proxy tab. Browse to `localhost`in the Burp browser.
 
 	![](img/img2.png)
 
@@ -57,7 +57,7 @@ The purpose of this challenge is to attack the website at `http://10.5.5.100` us
 4. Let's brute force the login from the command line using Hydra. Open a terminal window and enter:
 
 ```bash
-sudo hydra -t 4 -l bcampbell -P /media/cdrom0/wordlist.txt 10.5.5.100 http-post-form "/login.php:username=bcampbell&password=^PASS^:Invalid Password."
+sudo hydra -t 4 -l bcampbell -P /media/cdrom0/wordlist.txt localhost http-post-form "/login.php:username=bcampbell&password=^PASS^:Invalid Password."
 ```
 
 These options tell Hydra: the number of threads (4), to set the login to `bcampbell`,  the path to the password in the list provided, the IP of the  server, that it is an HTTP POST form, and that "Invalid Password." is the error message.
@@ -80,9 +80,9 @@ For this question, you should exploit the download orders function.
 
 1. Log into the site with any account and click **MY ORDERS**.
 
-2. Examine the **Download** link next to any order. The URL is: `http://10.5.5.100/download.php?file=invoices/order_##.pdf`.
+2. Examine the **Download** link next to any order. The URL is: `http://localhost/download.php?file=invoices/order_##.pdf`.
 
-3. The question tells us the file name is **token3.txt** and the path is `/var/www/`. So, let's change the link to `http://10.5.5.100/download.php?file=/var/www/token3.txt`.  You will get a file to download. Open this file to retrieve the token.
+3. The question tells us the file name is **token3.txt** and the path is `/var/www/`. So, let's change the link to `http://localhost/download.php?file=/var/www/token3.txt`.  You will get a file to download. Open this file to retrieve the token.
 
 ## Question 4
 
