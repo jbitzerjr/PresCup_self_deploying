@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ADJECTIVES="fuzzy tartan haunted evil cryptic dumb cursed filthy moldy broken"
 NOUNS="squirrel chainsaw gremlin possum priest curse toaster goblin"
@@ -6,12 +6,10 @@ NOUNS="squirrel chainsaw gremlin possum priest curse toaster goblin"
 FLAG_LOG="./current_tokens.txt"
 > "$FLAG_LOG"
 
-# Detect the challenge directory
-CHALLENGE_DIR=$(find ./ -mindepth 1 -maxdepth 1 -type d ! -name '.*' ! -name 'lost+found')
-cd "$CHALLENGE_DIR" || exit 1
+TARGET_DIR="./s-mart-webserver"
 
-# Find all .php and .txt files with ########
-PLACEHOLDER_FILES=$(find "$CHALLENGE_DIR" -type f \( -name '*.php' -o -name '*.txt' \) -exec grep -l "########" {} +)
+# Find all files under target dir that contain ########
+PLACEHOLDER_FILES=$(find "$TARGET_DIR" -type f -exec grep -l "########" {} +)
 
 i=1
 for FILE in $PLACEHOLDER_FILES; do
@@ -33,11 +31,11 @@ for FILE in $PLACEHOLDER_FILES; do
       }
     ' "$FILE" > "$FILE.tmp" && mv "$FILE.tmp" "$FILE"
 
-    SHORTFILE=$(basename "$FILE")
+    SHORTFILE=$(realpath --relative-to=. "$FILE")
     echo "FLAG $i ($SHORTFILE): $FLAG" >> "$FLAG_LOG"
     i=$((i+1))
   done
 done
 
 # Start the challenge
-docker compose up -d
+(cd "$TARGET_DIR" && docker compose up -d)
