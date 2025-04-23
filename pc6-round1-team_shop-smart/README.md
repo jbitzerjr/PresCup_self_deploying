@@ -29,7 +29,7 @@ After deployment, visit: [http://localhost](http://localhost)
 
 ## 🚀 Setup Instructions
 
-1. Open a terminal in this folder.
+1. Open a terminal in the challenge folder.
 2. Make the `init.sh` script executable:
    ```bash
    chmod +x init.sh
