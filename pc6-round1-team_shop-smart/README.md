@@ -33,3 +33,9 @@ After deployment, visit: [http://localhost](http://localhost)
 2. Make the `init.sh` script executable:
    ```bash
    chmod +x init.sh
+   ```
+3. Run the init script:
+   ```bash
+   ./init.sh
+   ```
+4. Browse to ```localhost```
