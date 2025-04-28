@@ -21,7 +21,7 @@ COPY server.xml $CATALINA_HOME/conf/server.xml
 COPY ./webapps/warlog.war $CATALINA_HOME/webapps/
 
 # Create a token for half points in the starting directory
-RUN echo "TOKEN 1: ##TOKEN1##" > /TOKEN1.txt
+RUN echo "Flag 1: ##FLAG1##" > /FLAG1.txt
 
 # Expose the Tomcat port
 EXPOSE 8080
