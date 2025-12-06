@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - "800:80"                    # Mario site → http://localhost:800
+    volumes:
+      - ./src:/var/www/html
+    environment:
+      DB_HOST: db
+      DB_NAME: ecommerce
+      DB_USER: website
+      DB_PASSWORD: tartans@1
+    command: >
+      sh -c '
+        # For every file under /var/www/html...
+        find /var/www/html -type f -print0 |
+        while IFS= read -r -d "" file; do
+          # Count how many ######## placeholders are in this file
+          COUNT=$$(grep -o "########" "$$file" 2>/dev/null | wc -l || true);
+          if [ "$$COUNT" -gt 0 ]; then
+            # For each occurrence, generate a NEW random flag and replace only the first remaining ########
+            for i in $$(seq 1 "$$COUNT"); do
+              RAND=$$(tr -dc A-Za-z0-9 </dev/urandom | head -c 16);
+              sed -i "0,/########/s//$$RAND/" "$$file";
+            done;
+          fi;
+        done;
+        # finally start Apache in the foreground
+        apache2-foreground
+      '
+
+  db:
+    image: mariadb:11
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: ecommerce
+      MYSQL_USER: website
+      MYSQL_PASSWORD: tartans@1
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./ecommercedb.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+
+volumes:
+  db_data:
